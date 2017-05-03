@@ -1,9 +1,11 @@
-package com.developgmail.mitroshin.yandextranslate;
+package com.developgmail.mitroshin.yandextranslate.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+
+import com.developgmail.mitroshin.yandextranslate.R;
 
 public abstract class SingleFragmentActivity extends FragmentActivity {
     protected abstract Fragment createFragment();

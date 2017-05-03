@@ -1,4 +1,4 @@
-package com.developgmail.mitroshin.yandextranslate;
+package com.developgmail.mitroshin.yandextranslate.utility;
 
 import android.util.Log;
 
@@ -48,8 +48,8 @@ public class YandexFetcher {
     }
 
     private byte[] tryToGetByteGroupByConnection(HttpURLConnection connection) throws IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         InputStream inputStream = connection.getInputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         int bytesRead = 0;
         byte[] buffer = new byte[1024];
         while ((bytesRead = inputStream.read(buffer)) > 0) {
@@ -57,17 +57,6 @@ public class YandexFetcher {
         }
         return outputStream.toByteArray();
     }
-
-
-
-
-
-
-
-
-
-
-
 
     public String getUrlString(String urlSpec) throws IOException {
         return new String(getUrlBytes(urlSpec));

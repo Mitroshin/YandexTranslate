@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">YandexTranslate</string>
+    <string name="text_type_the_text">Type the text</string>
+    <string name="text_source_language">Source language</string>
 </resources>

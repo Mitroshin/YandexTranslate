@@ -5,4 +5,5 @@
     <string name="text_result_language">Result language</string>
     <string name="text_result_of_translate">Result of translate</string>
     <string name="text_choose_result_language">Choose result language</string>
+    <string name="text_language">Language</string>
 </resources>

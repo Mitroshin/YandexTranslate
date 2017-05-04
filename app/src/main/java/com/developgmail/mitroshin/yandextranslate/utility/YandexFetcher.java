@@ -15,6 +15,7 @@ import java.net.URL;
 public class YandexFetcher {
     private static final String TAG = "YandexFetcher";
     private static final String API_KEY = "trnsl.1.1.20170409T220612Z.39bd7f8838bf263b.80dd81cbca10d22872c640dd733fe291e4047fb6";
+
     private static final int OPERATION_WAS_SUCCESSFUL = 200;
     private static final int INVALID_API_KEY = 401;
     private static final int API_KEY_LOCKED = 402;
@@ -42,9 +43,8 @@ public class YandexFetcher {
         if (code == OPERATION_WAS_SUCCESSFUL) {
             return gsonDetermineLanguage.getLang();
         } else {
-            showNotificationByCode(code);
+            return notificationByCode(code);
         }
-        return null;
     }
 
     private String getQueryToDetermineLanguageOfText(String text) {
@@ -55,11 +55,11 @@ public class YandexFetcher {
                 .build().toString();
     }
 
-    public String getUrlString(String urlSpec) throws IOException {
+    private String getUrlString(String urlSpec) throws IOException {
         return new String(getUrlBytes(urlSpec));
     }
 
-    public byte[] getUrlBytes(String urlString) {
+    private byte[] getUrlBytes(String urlString) {
         HttpURLConnection connection = getConnectionByURL(urlString);
         return getByteGroupByConnection(connection);
     }
@@ -96,6 +96,9 @@ public class YandexFetcher {
 
     private byte[] tryToGetByteGroupByConnection(HttpURLConnection connection) throws IOException {
         InputStream inputStream = connection.getInputStream();
+        if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            throw new IOException(connection.getResponseMessage());
+        }
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         int bytesRead = 0;
         byte[] buffer = new byte[1024];
@@ -105,21 +108,21 @@ public class YandexFetcher {
         return outputStream.toByteArray();
     }
 
-    private void showNotificationByCode(int code) {
-        // TODO На активности от которой пришел запрос - нужно отобразить Toast с уведомлением об ошибке
+    private String notificationByCode(int code) {
         switch (code) {
             case INVALID_API_KEY:
-                break;
+                return "Invalid API key";
             case API_KEY_LOCKED:
-                break;
+                return "API key locked";
             case DAILY_LIMIT_EXCEEDED:
-                break;
+                return "It exceeded the daily limit on the amount of translated text";
             case MAXIMUM_TEXT_SIZE_EXCEEDED:
-                break;
+                return "Maximum text size exceeded";
             case TEXT_CAN_NOT_BE_TRANSLATED:
-                break;
+                return "Text can not be translated";
             case TRANSLATION_DIRECTION_IS_NOT_SUPPORTED:
-                break;
+                return "Specified translation direction is not supported";
         }
+        return null;
     }
 }

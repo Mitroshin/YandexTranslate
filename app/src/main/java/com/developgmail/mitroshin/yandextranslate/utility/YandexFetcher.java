@@ -16,15 +16,6 @@ public class YandexFetcher {
     private static final String TAG = "YandexFetcher";
     private static final String API_KEY = "trnsl.1.1.20170409T220612Z.39bd7f8838bf263b.80dd81cbca10d22872c640dd733fe291e4047fb6";
 
-    private static final int OPERATION_WAS_SUCCESSFUL = 200;
-    private static final int INVALID_API_KEY = 401;
-    private static final int API_KEY_LOCKED = 402;
-    private static final int DAILY_LIMIT_EXCEEDED = 404;
-    private static final int MAXIMUM_TEXT_SIZE_EXCEEDED = 413;
-    private static final int TEXT_CAN_NOT_BE_TRANSLATED = 422;
-    private static final int TRANSLATION_DIRECTION_IS_NOT_SUPPORTED = 501;
-
-
     public String determineLanguageOfText(String text) {
         try {
             return tryToDetermineLanguageOfText(text);
@@ -39,12 +30,7 @@ public class YandexFetcher {
         String jsonDetectLanguage = getUrlString(queryDetectLanguage);
         Gson gson = new Gson();
         GsonDetermineLanguage gsonDetermineLanguage = gson.fromJson(jsonDetectLanguage, GsonDetermineLanguage.class);
-        int code = gsonDetermineLanguage.getCode();
-        if (code == OPERATION_WAS_SUCCESSFUL) {
-            return gsonDetermineLanguage.getLang();
-        } else {
-            return notificationByCode(code);
-        }
+        return gsonDetermineLanguage.getLang();
     }
 
     private String getQueryToDetermineLanguageOfText(String text) {
@@ -106,25 +92,5 @@ public class YandexFetcher {
             outputStream.write(buffer, 0, bytesRead);
         }
         return outputStream.toByteArray();
-    }
-
-    //TODO судя по тому, что изменение ключа не повлекло за собой уведомления о неправильном ключе - фиг знает как обрабатывать эту ситуацию.
-    // Возникает ситуация возникновения null при получении connection. Надо думать.
-    private String notificationByCode(int code) {
-        switch (code) {
-            case INVALID_API_KEY:
-                return "Invalid API key";
-            case API_KEY_LOCKED:
-                return "API key locked";
-            case DAILY_LIMIT_EXCEEDED:
-                return "It exceeded the daily limit on the amount of translated text";
-            case MAXIMUM_TEXT_SIZE_EXCEEDED:
-                return "Maximum text size exceeded";
-            case TEXT_CAN_NOT_BE_TRANSLATED:
-                return "Text can not be translated";
-            case TRANSLATION_DIRECTION_IS_NOT_SUPPORTED:
-                return "Specified translation direction is not supported";
-        }
-        return null;
     }
 }

@@ -2,4 +2,7 @@
     <string name="app_name">YandexTranslate</string>
     <string name="text_type_the_text">Type the text</string>
     <string name="text_source_language">Source language</string>
+    <string name="text_result_language">Result language</string>
+    <string name="text_result_of_translate">Result of translate</string>
+    <string name="text_choose_result_language">Choose result language</string>
 </resources>

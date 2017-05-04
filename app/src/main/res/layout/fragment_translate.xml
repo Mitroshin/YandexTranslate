@@ -5,20 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/fragment_translate_text_view_source_language"
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/text_source_language"
-        android:textSize="14sp"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/fragment_translate_edit_text_source_text"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/fragment_translate_text_view_source_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/text_source_language"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/fragment_translate_edit_text_source_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/text_type_the_text"
+                android:inputType="textMultiLine"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/fragment_translate_text_view_result_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/text_result_language"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/fragment_translate_text_view_result_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/text_result_of_translate"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="2"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="@string/text_type_the_text"
-        android:inputType="textMultiLine"/>
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/fragment_translate_button_choose_result_language"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_choose_result_language"/>
+    </LinearLayout>
 </LinearLayout>

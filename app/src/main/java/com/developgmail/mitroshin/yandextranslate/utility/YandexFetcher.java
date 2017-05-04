@@ -108,6 +108,8 @@ public class YandexFetcher {
         return outputStream.toByteArray();
     }
 
+    //TODO судя по тому, что изменение ключа не повлекло за собой уведомления о неправильном ключе - фиг знает как обрабатывать эту ситуацию.
+    // Возникает ситуация возникновения null при получении connection. Надо думать.
     private String notificationByCode(int code) {
         switch (code) {
             case INVALID_API_KEY:

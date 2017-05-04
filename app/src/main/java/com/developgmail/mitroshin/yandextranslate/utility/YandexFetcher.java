@@ -6,11 +6,15 @@ import android.util.Log;
 import com.developgmail.mitroshin.yandextranslate.gson.GsonDetermineLanguage;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 public class YandexFetcher {
     private static final String TAG = "YandexFetcher";
@@ -38,6 +42,34 @@ public class YandexFetcher {
                 .buildUpon()
                 .appendQueryParameter("key", API_KEY)
                 .appendQueryParameter("text", text)
+                .build().toString();
+    }
+
+    public Map<String, String> getMapOfLanguages() {
+        try {
+            return tryToGetMapOfLanguages();
+        } catch (IOException ioe) {
+            Log.e(TAG, "Error while requesting list of languages: ", ioe);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Map<String, String> tryToGetMapOfLanguages() throws IOException, JSONException {
+        String queryToListOfLanguages = getQueryToListOfLanguages();
+        String jsonListOfLanguages = getUrlString(queryToListOfLanguages);
+        JSONObject topLevelJson = new JSONObject(jsonListOfLanguages);
+        JSONObject jsonLangs = topLevelJson.getJSONObject("langs");
+        Map<String, String> mapOfLanguages = new Gson().fromJson(String.valueOf(jsonLangs), Map.class);
+        return mapOfLanguages;
+    }
+
+    private String getQueryToListOfLanguages() {
+        return Uri.parse("https://translate.yandex.net/api/v1.5/tr.json/getLangs? ")
+                .buildUpon()
+                .appendQueryParameter("ui", "en")
+                .appendQueryParameter("key", API_KEY)
                 .build().toString();
     }
 

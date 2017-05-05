@@ -69,22 +69,6 @@ public class TranslateFragment extends Fragment {
         });
     }
 
-    private void initializeButtonChooseResultLanguage() {
-        mButtonChooseResultLanguage = (Button) mViewLayout.findViewById(R.id.fragment_translate_button_choose_result_language);
-        mButtonChooseResultLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchDialogToChooseResultLanguage();
-            }
-        });
-    }
-
-    private void launchDialogToChooseResultLanguage() {
-        LanguagePickerDialogFragment languagePickerDialogFragment = LanguagePickerDialogFragment.newInstance();
-        languagePickerDialogFragment.setTargetFragment(TranslateFragment.this, REQUEST_RESULT_LANGUAGE);
-        languagePickerDialogFragment.show(mFragmentManager, DIALOG_CHOOSE_RESULT_LANGUAGE);
-    }
-
     private class DetermineLanguageOfText extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -100,5 +84,21 @@ public class TranslateFragment extends Fragment {
         protected void onPostExecute(String sourceLanguage) {
             mTextViewSourceLanguage.setText(sourceLanguage);
         }
+    }
+
+    private void initializeButtonChooseResultLanguage() {
+        mButtonChooseResultLanguage = (Button) mViewLayout.findViewById(R.id.fragment_translate_button_choose_result_language);
+        mButtonChooseResultLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchDialogToChooseResultLanguage();
+            }
+        });
+    }
+
+    private void launchDialogToChooseResultLanguage() {
+        LanguagePickerDialogFragment languagePickerDialogFragment = LanguagePickerDialogFragment.newInstance();
+        languagePickerDialogFragment.setTargetFragment(TranslateFragment.this, REQUEST_RESULT_LANGUAGE);
+        languagePickerDialogFragment.show(mFragmentManager, DIALOG_CHOOSE_RESULT_LANGUAGE);
     }
 }

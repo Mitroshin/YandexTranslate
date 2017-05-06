@@ -1,5 +1,6 @@
 package com.developgmail.mitroshin.yandextranslate.fragment;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.developgmail.mitroshin.yandextranslate.R;
-import com.developgmail.mitroshin.yandextranslate.fragment.dialog.LanguagePickerDialogFragment;
+import com.developgmail.mitroshin.yandextranslate.activity.ChooseLanguageActivity;
 import com.developgmail.mitroshin.yandextranslate.utility.YandexFetcher;
 
 public class TranslateFragment extends Fragment {
@@ -97,14 +98,16 @@ public class TranslateFragment extends Fragment {
         mButtonChooseResultLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchDialogToChooseResultLanguage();
+//                launchDialogToChooseResultLanguage();
+                Intent intent = ChooseLanguageActivity.newIntent(getActivity());
+                startActivityForResult(intent, REQUEST_RESULT_LANGUAGE);
             }
         });
     }
 
-    private void launchDialogToChooseResultLanguage() {
-        LanguagePickerDialogFragment languagePickerDialogFragment = LanguagePickerDialogFragment.newInstance();
-        languagePickerDialogFragment.setTargetFragment(TranslateFragment.this, REQUEST_RESULT_LANGUAGE);
-        languagePickerDialogFragment.show(mFragmentManager, DIALOG_CHOOSE_RESULT_LANGUAGE);
-    }
+//    private void launchDialogToChooseResultLanguage() {
+//        LanguagePickerDialogFragment languagePickerDialogFragment = LanguagePickerDialogFragment.newInstance();
+//        languagePickerDialogFragment.setTargetFragment(TranslateFragment.this, REQUEST_RESULT_LANGUAGE);
+//        languagePickerDialogFragment.show(mFragmentManager, DIALOG_CHOOSE_RESULT_LANGUAGE);
+//    }
 }

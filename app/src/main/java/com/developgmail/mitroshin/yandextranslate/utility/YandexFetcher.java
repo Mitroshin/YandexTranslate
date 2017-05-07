@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.developgmail.mitroshin.yandextranslate.gson.GsonDetermineLanguage;
-import com.developgmail.mitroshin.yandextranslate.model.LanguageItem;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -15,8 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class YandexFetcher {
@@ -48,7 +45,7 @@ public class YandexFetcher {
                 .build().toString();
     }
 
-    public List<LanguageItem> getLanguageGroup() {
+    public Map<String, String> getLanguageGroup() {
         try {
             return tryToGetLanguageGroup();
         } catch (IOException ioe) {
@@ -59,14 +56,13 @@ public class YandexFetcher {
         return null;
     }
 
-    private List<LanguageItem> tryToGetLanguageGroup() throws IOException, JSONException {
+    private Map<String, String> tryToGetLanguageGroup() throws IOException, JSONException {
         String queryToListOfLanguages = getQueryToListOfLanguages();
         String jsonListOfLanguages = getUrlString(queryToListOfLanguages);
         JSONObject topLevelJson = new JSONObject(jsonListOfLanguages);
         JSONObject jsonLangs = topLevelJson.getJSONObject("langs");
         Map<String, String> mapOfLanguages = new Gson().fromJson(String.valueOf(jsonLangs), Map.class);
-        List<LanguageItem> languageGroup = getLanguageGroupFromMap(mapOfLanguages);
-        return languageGroup;
+        return mapOfLanguages;
     }
 
     private String getQueryToListOfLanguages() {
@@ -75,14 +71,6 @@ public class YandexFetcher {
                 .appendQueryParameter("ui", "en")
                 .appendQueryParameter("key", API_KEY)
                 .build().toString();
-    }
-
-    private List<LanguageItem> getLanguageGroupFromMap(Map<String, String> mapOfLanguages) {
-        List<LanguageItem> languageGroup = new ArrayList<>();
-        for (String key: mapOfLanguages.keySet()) {
-            languageGroup.add(new LanguageItem(key, mapOfLanguages.get(key)));
-        }
-        return languageGroup;
     }
 
     private String getUrlString(String urlSpec) throws IOException {

@@ -18,10 +18,15 @@ import com.developgmail.mitroshin.yandextranslate.R;
 import com.developgmail.mitroshin.yandextranslate.activity.ChooseLanguageActivity;
 import com.developgmail.mitroshin.yandextranslate.utility.YandexFetcher;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TranslateFragment extends Fragment {
     private static final String TAG = "TranslateFragment";
 
     private static final int REQUEST_RESULT_LANGUAGE = 0;
+
+    private Map<String, String> mGlobalLanguageGroup = new HashMap<>();
 
     private View mViewLayout;
     private TextView mTextViewSourceLanguage;
@@ -36,6 +41,7 @@ public class TranslateFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        new ListOfLanguages().execute();
     }
 
     @Nullable
@@ -84,8 +90,9 @@ public class TranslateFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String sourceLanguage) {
-            mTextViewSourceLanguage.setText(sourceLanguage);
+        protected void onPostExecute(String codeOfSourceLanguage) {
+            String nameOfSourceLanguage = mGlobalLanguageGroup.get(codeOfSourceLanguage);
+            mTextViewSourceLanguage.setText(nameOfSourceLanguage);
         }
     }
 
@@ -102,5 +109,17 @@ public class TranslateFragment extends Fragment {
     private void launchChooseLanguageFragment() {
         Intent intent = ChooseLanguageActivity.newIntent(getActivity());
         startActivityForResult(intent, REQUEST_RESULT_LANGUAGE);
+    }
+
+    private class ListOfLanguages extends AsyncTask<Void, Void, Map<String, String>> {
+        @Override
+        protected Map<String, String> doInBackground(Void... params) {
+            return new YandexFetcher().getLanguageGroup();
+        }
+
+        @Override
+        protected void onPostExecute(Map<String, String> languageGroup) {
+            mGlobalLanguageGroup = languageGroup;
+        }
     }
 }

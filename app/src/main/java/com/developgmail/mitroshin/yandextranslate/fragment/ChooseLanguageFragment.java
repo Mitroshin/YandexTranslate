@@ -1,6 +1,5 @@
 package com.developgmail.mitroshin.yandextranslate.fragment;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,15 +12,13 @@ import android.widget.TextView;
 
 import com.developgmail.mitroshin.yandextranslate.R;
 import com.developgmail.mitroshin.yandextranslate.model.LanguageItem;
-import com.developgmail.mitroshin.yandextranslate.utility.YandexFetcher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseLanguageFragment extends Fragment {
     private static final String TAG = "ChooseLanguageFragment";
 
-    private List<LanguageItem> mGlobalLanguageGroup = new ArrayList<>();
+//    private List<LanguageItem> mGlobalLanguageGroup = new ArrayList<>();
 
     private View mViewLayout;
     private RecyclerView mLanguageRecyclerView;
@@ -34,7 +31,7 @@ public class ChooseLanguageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        new ListOfLanguages().execute();
+//        new ListOfLanguages().execute();
     }
 
     @Nullable
@@ -57,22 +54,22 @@ public class ChooseLanguageFragment extends Fragment {
 
     private void setupAdapter() {
         if (isAdded()) {
-            mLanguageRecyclerView.setAdapter(new LanguageAdapter(mGlobalLanguageGroup));
+//            mLanguageRecyclerView.setAdapter(new LanguageAdapter(mGlobalLanguageGroup));
         }
     }
 
-    private class ListOfLanguages extends AsyncTask<Void, Void, List<LanguageItem>> {
-        @Override
-        protected List<LanguageItem> doInBackground(Void... params) {
-            return new YandexFetcher().getLanguageGroup();
-        }
-
-        @Override
-        protected void onPostExecute(List<LanguageItem> languageGroup) {
-            mGlobalLanguageGroup = languageGroup;
-            setupAdapter();
-        }
-    }
+//    private class ListOfLanguages extends AsyncTask<Void, Void, List<LanguageItem>> {
+//        @Override
+//        protected List<LanguageItem> doInBackground(Void... params) {
+//            return new YandexFetcher().getLanguageGroup();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<LanguageItem> languageGroup) {
+//            mGlobalLanguageGroup = languageGroup;
+//            setupAdapter();
+//        }
+//    }
 
     private class LanguageAdapter extends RecyclerView.Adapter<LanguageHolder> {
         private List<LanguageItem> mAdapterLanguageGroup;

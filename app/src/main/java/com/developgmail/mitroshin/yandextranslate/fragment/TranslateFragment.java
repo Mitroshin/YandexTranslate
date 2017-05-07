@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,16 +19,14 @@ import com.developgmail.mitroshin.yandextranslate.activity.ChooseLanguageActivit
 import com.developgmail.mitroshin.yandextranslate.utility.YandexFetcher;
 
 public class TranslateFragment extends Fragment {
+    private static final String TAG = "TranslateFragment";
 
     private static final int REQUEST_RESULT_LANGUAGE = 0;
-    private static final String DIALOG_CHOOSE_RESULT_LANGUAGE = "DialogChooseResultLanguage";
 
     private View mViewLayout;
     private TextView mTextViewSourceLanguage;
     private EditText mEditTextSourceText;
     private Button mButtonChooseResultLanguage;
-
-    private FragmentManager mFragmentManager;
 
     public static TranslateFragment newInstance() {
         return new TranslateFragment();
@@ -45,7 +42,6 @@ public class TranslateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewLayout = inflater.inflate(R.layout.fragment_translate, container, false);
-        mFragmentManager = getFragmentManager();
         initializeLayout();
         return mViewLayout;
     }
@@ -98,16 +94,13 @@ public class TranslateFragment extends Fragment {
         mButtonChooseResultLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                launchDialogToChooseResultLanguage();
-                Intent intent = ChooseLanguageActivity.newIntent(getActivity());
-                startActivityForResult(intent, REQUEST_RESULT_LANGUAGE);
+                launchChooseLanguageFragment();
             }
         });
     }
 
-//    private void launchDialogToChooseResultLanguage() {
-//        LanguagePickerDialogFragment languagePickerDialogFragment = LanguagePickerDialogFragment.newInstance();
-//        languagePickerDialogFragment.setTargetFragment(TranslateFragment.this, REQUEST_RESULT_LANGUAGE);
-//        languagePickerDialogFragment.show(mFragmentManager, DIALOG_CHOOSE_RESULT_LANGUAGE);
-//    }
+    private void launchChooseLanguageFragment() {
+        Intent intent = ChooseLanguageActivity.newIntent(getActivity());
+        startActivityForResult(intent, REQUEST_RESULT_LANGUAGE);
+    }
 }

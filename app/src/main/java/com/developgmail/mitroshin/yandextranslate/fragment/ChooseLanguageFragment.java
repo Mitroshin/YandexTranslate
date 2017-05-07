@@ -23,8 +23,8 @@ public class ChooseLanguageFragment extends Fragment {
 
     private List<LanguageItem> mGlobalLanguageGroup = new ArrayList<>();
 
-    private RecyclerView mLanguageRecyclerView;
     private View mViewLayout;
+    private RecyclerView mLanguageRecyclerView;
 
     public static ChooseLanguageFragment newInstance() {
         return new ChooseLanguageFragment();
@@ -84,8 +84,8 @@ public class ChooseLanguageFragment extends Fragment {
         @Override
         public LanguageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View view = inflater.inflate(R.layout.item_language, parent, false);
-            return new LanguageHolder(view);
+            View itemLanguageView = inflater.inflate(R.layout.item_language, parent, false);
+            return new LanguageHolder(itemLanguageView);
         }
 
         @Override

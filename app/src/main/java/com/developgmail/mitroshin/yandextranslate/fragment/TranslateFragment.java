@@ -1,6 +1,7 @@
 package com.developgmail.mitroshin.yandextranslate.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 public class TranslateFragment extends Fragment {
     private static final String TAG = "TranslateFragment";
+    private static final String YANDEX_TRANSLATOR_URL = "http://translate.yandex.ru/";
 
     private static final int REQUEST_RESULT_LANGUAGE = 0;
 
@@ -32,6 +34,7 @@ public class TranslateFragment extends Fragment {
     private TextView mTextViewSourceLanguage;
     private EditText mEditTextSourceText;
     private Button mButtonChooseResultLanguage;
+    private Button mButtonYandexTranslator;
 
     public static TranslateFragment newInstance() {
         return new TranslateFragment();
@@ -56,6 +59,7 @@ public class TranslateFragment extends Fragment {
         initializeTextViewSourceLanguage();
         initializeEditTextSourceText();
         initializeButtonChooseResultLanguage();
+        initializeButtonYandexTranslator();
     }
 
     private void initializeTextViewSourceLanguage() {
@@ -121,5 +125,21 @@ public class TranslateFragment extends Fragment {
         protected void onPostExecute(Map<String, String> languageGroup) {
             mGlobalLanguageGroup = languageGroup;
         }
+    }
+
+    private void initializeButtonYandexTranslator() {
+        mButtonYandexTranslator = (Button) mViewLayout.findViewById(R.id.fragment_translate_button_yandex_translate);
+        mButtonYandexTranslator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchBrowserByUrl();
+            }
+        });
+    }
+
+    private void launchBrowserByUrl() {
+        Uri urlToYandexTranslator = Uri.parse(YANDEX_TRANSLATOR_URL);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, urlToYandexTranslator);
+        startActivity(launchBrowser);
     }
 }

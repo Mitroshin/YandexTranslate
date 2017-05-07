@@ -6,4 +6,6 @@
     <string name="text_result_of_translate">Result of translate</string>
     <string name="text_choose_result_language">Choose result language</string>
     <string name="text_language">Language</string>
+    <string name="text_add_to_dictionary">Add to dictionary</string>
+    <string name="text_yandex_translate">Translated by service \"Yandex.Translator\"</string>
 </resources>

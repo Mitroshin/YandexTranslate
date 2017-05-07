@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,29 +73,38 @@
         android:layout_weight="2"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/fragment_translate_button_choose_result_language"
-            style="@android:style/Widget.Material.Button.Colored"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableLeft="@drawable/ic_choose_result_language"
-            android:elevation="10dp"
-            android:text="@string/text_choose_result_language"
-            android:textAllCaps="false"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/fragment_translate_button_add_to_dictionary"
-            style="@android:style/Widget.Material.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableLeft="@drawable/ic_add_to_dictionary"
-            android:elevation="10dp"
-            android:text="@string/text_add_to_dictionary"
-            android:textAllCaps="false"/>
+            <Button
+                android:id="@+id/fragment_translate_button_choose_result_language"
+                style="@android:style/Widget.Material.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_choose_result_language"
+                android:elevation="10dp"
+                android:text="@string/text_choose_result_language"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/fragment_translate_button_add_to_dictionary"
+                style="@android:style/Widget.Material.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_add_to_dictionary"
+                android:elevation="10dp"
+                android:text="@string/text_add_to_dictionary"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/fragment_translate_button_yandex_translate"

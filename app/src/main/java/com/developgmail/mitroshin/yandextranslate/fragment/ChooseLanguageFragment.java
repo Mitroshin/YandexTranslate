@@ -40,7 +40,7 @@ public class ChooseLanguageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewLayout = inflater.inflate(R.layout.dialog_choose_language, container, false);
+        mViewLayout = inflater.inflate(R.layout.fragment_choose_language, container, false);
         initializeLayout();
         return mViewLayout;
     }

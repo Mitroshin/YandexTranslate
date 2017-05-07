@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/cardview_light_background"
+            android:elevation="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/fragment_translate_text_view_source_language"
@@ -36,10 +40,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/cardview_light_background"
+            android:elevation="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/fragment_translate_text_view_result_language"
@@ -61,16 +68,19 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="2"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/fragment_translate_button_choose_result_language"
-            android:layout_margin="10dp"
+            style="@android:style/Widget.Material.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_choose_result_language"/>
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/ic_choose_result_language"
+            android:text="@string/text_choose_result_language"
+            android:textAllCaps="false"/>
     </LinearLayout>
 </LinearLayout>

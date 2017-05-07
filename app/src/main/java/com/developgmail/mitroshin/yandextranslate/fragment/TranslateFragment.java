@@ -19,7 +19,9 @@ import com.developgmail.mitroshin.yandextranslate.R;
 import com.developgmail.mitroshin.yandextranslate.activity.ChooseLanguageActivity;
 import com.developgmail.mitroshin.yandextranslate.utility.YandexFetcher;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TranslateFragment extends Fragment {
@@ -111,8 +113,16 @@ public class TranslateFragment extends Fragment {
     }
 
     private void launchChooseLanguageFragment() {
-        Intent intent = ChooseLanguageActivity.newIntent(getActivity());
+        Intent intent = ChooseLanguageActivity.newIntent(getActivity(), getListOfLanguagesNameFromMap());
         startActivityForResult(intent, REQUEST_RESULT_LANGUAGE);
+    }
+
+    private List<String> getListOfLanguagesNameFromMap() {
+        List<String> listOfLanguagesItem = new ArrayList<>();
+        for (String itemCode: mGlobalLanguageGroup.keySet()) {
+            listOfLanguagesItem.add(mGlobalLanguageGroup.get(itemCode));
+        }
+        return listOfLanguagesItem;
     }
 
     private class ListOfLanguages extends AsyncTask<Void, Void, Map<String, String>> {

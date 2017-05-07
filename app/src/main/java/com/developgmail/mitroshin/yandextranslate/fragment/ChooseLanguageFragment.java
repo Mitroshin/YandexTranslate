@@ -11,27 +11,34 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developgmail.mitroshin.yandextranslate.R;
-import com.developgmail.mitroshin.yandextranslate.model.LanguageItem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChooseLanguageFragment extends Fragment {
     private static final String TAG = "ChooseLanguageFragment";
+    private static final String ARG_ARRAY_OF_LANGUAGES = "crime_id";
 
-//    private List<LanguageItem> mGlobalLanguageGroup = new ArrayList<>();
+    private List<String> mGlobalLanguageGroup = new ArrayList<>();
 
     private View mViewLayout;
     private RecyclerView mLanguageRecyclerView;
 
-    public static ChooseLanguageFragment newInstance() {
-        return new ChooseLanguageFragment();
+    public static ChooseLanguageFragment newInstance(String[] arrayOfLanguages) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_ARRAY_OF_LANGUAGES, arrayOfLanguages);
+        ChooseLanguageFragment chooseLanguageFragment = new ChooseLanguageFragment();
+        chooseLanguageFragment.setArguments(args);
+        return chooseLanguageFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-//        new ListOfLanguages().execute();
+        String[] arrayOfLanguages = (String[]) getArguments().getSerializable(ARG_ARRAY_OF_LANGUAGES);
+        mGlobalLanguageGroup = Arrays.asList(arrayOfLanguages);
     }
 
     @Nullable
@@ -54,27 +61,14 @@ public class ChooseLanguageFragment extends Fragment {
 
     private void setupAdapter() {
         if (isAdded()) {
-//            mLanguageRecyclerView.setAdapter(new LanguageAdapter(mGlobalLanguageGroup));
+            mLanguageRecyclerView.setAdapter(new LanguageAdapter(mGlobalLanguageGroup));
         }
     }
 
-//    private class ListOfLanguages extends AsyncTask<Void, Void, List<LanguageItem>> {
-//        @Override
-//        protected List<LanguageItem> doInBackground(Void... params) {
-//            return new YandexFetcher().getLanguageGroup();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<LanguageItem> languageGroup) {
-//            mGlobalLanguageGroup = languageGroup;
-//            setupAdapter();
-//        }
-//    }
-
     private class LanguageAdapter extends RecyclerView.Adapter<LanguageHolder> {
-        private List<LanguageItem> mAdapterLanguageGroup;
+        private List<String> mAdapterLanguageGroup;
 
-        public LanguageAdapter(List<LanguageItem> languageGroup) {
+        public LanguageAdapter(List<String> languageGroup) {
             mAdapterLanguageGroup = languageGroup;
         }
 
@@ -87,7 +81,7 @@ public class ChooseLanguageFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(LanguageHolder holder, int position) {
-            LanguageItem languageItem = mAdapterLanguageGroup.get(position);
+            String languageItem = mAdapterLanguageGroup.get(position);
             holder.bindLanguage(languageItem);
         }
 
@@ -106,8 +100,8 @@ public class ChooseLanguageFragment extends Fragment {
             mLanguageTextView = (TextView) itemView.findViewById(R.id.item_language_text_view_language);
         }
 
-        public void bindLanguage(LanguageItem languageItem) {
-            mLanguageTextView.setText(languageItem.getName());
+        public void bindLanguage(String languageItem) {
+            mLanguageTextView.setText(languageItem);
         }
     }
 }

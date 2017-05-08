@@ -11,17 +11,17 @@ import java.util.List;
 public class ChooseLanguageActivity extends SingleFragmentActivity {
     private static final String EXTRA_ARRAY_OF_LANGUAGES = "com.developgmail.mitroshin.yandextranslate.activity.languages";
 
-    @Override
-    protected Fragment createFragment() {
-        String[] arrayOfLanguages = (String[]) getIntent().getSerializableExtra(EXTRA_ARRAY_OF_LANGUAGES);
-        return ChooseLanguageFragment.newInstance(arrayOfLanguages);
-    }
-
-    public static Intent newIntent(Context pachageContext, List<String> listOfLanguages) {
-        Intent intent = new Intent(pachageContext, ChooseLanguageActivity.class);
+    public static Intent newIntent(Context packageContext, List<String> listOfLanguages) {
+        Intent intent = new Intent(packageContext, ChooseLanguageActivity.class);
         String[] arrayOfLanguages = new String[listOfLanguages.size()];
         arrayOfLanguages = listOfLanguages.toArray(arrayOfLanguages);
         intent.putExtra(EXTRA_ARRAY_OF_LANGUAGES, arrayOfLanguages);
         return intent;
+    }
+
+    @Override
+    protected Fragment createFragment() {
+        String[] arrayOfLanguages = (String[]) getIntent().getSerializableExtra(EXTRA_ARRAY_OF_LANGUAGES);
+        return ChooseLanguageFragment.newInstance(arrayOfLanguages);
     }
 }

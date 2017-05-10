@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,5 +152,15 @@ public class TranslateFragment extends Fragment {
         Uri urlToYandexTranslator = Uri.parse(YANDEX_TRANSLATOR_URL);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, urlToYandexTranslator);
         startActivity(launchBrowser);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_RESULT_LANGUAGE:
+                Log.i(TAG, "Result = " + data.getStringExtra(ChooseLanguageActivity.EXTRA_RESULT_LANGUAGE));
+                break;
+        }
     }
 }

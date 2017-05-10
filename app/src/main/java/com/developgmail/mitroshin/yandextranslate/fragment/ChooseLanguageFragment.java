@@ -1,5 +1,6 @@
 package com.developgmail.mitroshin.yandextranslate.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,9 +22,20 @@ public class ChooseLanguageFragment extends Fragment {
     private static final String ARG_ARRAY_OF_LANGUAGES = "crime_id";
 
     private List<String> mLanguageGroup = new ArrayList<>();
+    private Callbacks mCallbacks;
 
     private View mViewLayout;
     private RecyclerView mRecyclerViewLanguages;
+
+    public interface Callbacks {
+        void sendResultLanguage(String resultLanguage);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
 
     public static ChooseLanguageFragment newInstance(String[] arrayOfLanguages) {
         Bundle argumentsOfFragment = new Bundle();
@@ -91,16 +103,29 @@ public class ChooseLanguageFragment extends Fragment {
         }
     }
 
-    private class LanguageHolder extends RecyclerView.ViewHolder {
+    private class LanguageHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Button mButtonNameOfLanguage;
 
         public LanguageHolder(View itemView) {
             super(itemView);
             mButtonNameOfLanguage = (Button) itemView.findViewById(R.id.item_language_button_name_of_language);
+            mButtonNameOfLanguage.setOnClickListener(this);
         }
 
         public void bindLanguage(String nameOfLanguage) {
             mButtonNameOfLanguage.setText(nameOfLanguage);
         }
+
+        @Override
+        public void onClick(View v) {
+            String selectedLanguage = (String) mButtonNameOfLanguage.getText();
+            mCallbacks.sendResultLanguage(selectedLanguage);
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 }

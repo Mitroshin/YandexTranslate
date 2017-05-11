@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +31,11 @@ public class TranslateFragment extends Fragment {
     private static final int REQUEST_RESULT_LANGUAGE = 0;
 
     private Map<String, String> mGlobalLanguageGroup = new HashMap<>();
+    private String currentResultLanguageCode;
 
     private View mViewLayout;
     private TextView mTextViewSourceLanguage;
+    private TextView mTextViewResultLanguage;
     private EditText mEditTextSourceText;
     private Button mButtonChooseResultLanguage;
     private Button mButtonYandexTranslator;
@@ -60,6 +61,7 @@ public class TranslateFragment extends Fragment {
 
     private void initializeLayout() {
         initializeTextViewSourceLanguage();
+        initializeTextViewResultLanguage();
         initializeEditTextSourceText();
         initializeButtonChooseResultLanguage();
         initializeButtonYandexTranslator();
@@ -67,6 +69,10 @@ public class TranslateFragment extends Fragment {
 
     private void initializeTextViewSourceLanguage() {
         mTextViewSourceLanguage = (TextView) mViewLayout.findViewById(R.id.fragment_translate_text_view_source_language);
+    }
+
+    private void initializeTextViewResultLanguage() {
+        mTextViewResultLanguage = (TextView) mViewLayout.findViewById(R.id.fragment_translate_text_view_result_language);
     }
 
     private void initializeEditTextSourceText() {
@@ -159,13 +165,27 @@ public class TranslateFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_RESULT_LANGUAGE:
-                if (data == null) {
-                    return;
-                } else {
-                    String resultLanguage = ChooseLanguageActivity.getLanguageFromResultIntent(data);
-                    Log.i(TAG, "Result = " + resultLanguage);
-                }
+                setCurrentLanguageFromResultIntent(data);
                 break;
         }
+    }
+
+    private void setCurrentLanguageFromResultIntent(Intent resultIntent) {
+        if (resultIntent == null) {
+            return;
+        } else {
+            String resultLanguage = ChooseLanguageActivity.getLanguageFromResultIntent(resultIntent);
+            currentResultLanguageCode = getLanguageCodeByName(resultLanguage);
+            mTextViewResultLanguage.setText(resultLanguage);
+        }
+    }
+
+    private String getLanguageCodeByName(String nameOfLanguage) {
+        for (String code: mGlobalLanguageGroup.keySet()) {
+            if (nameOfLanguage.equals(mGlobalLanguageGroup.get(code))) {
+                return code;
+            }
+        }
+        return null;
     }
 }

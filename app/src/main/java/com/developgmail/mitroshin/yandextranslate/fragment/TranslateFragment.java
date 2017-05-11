@@ -159,7 +159,12 @@ public class TranslateFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_RESULT_LANGUAGE:
-                Log.i(TAG, "Result = " + data.getStringExtra(ChooseLanguageActivity.EXTRA_RESULT_LANGUAGE));
+                if (data == null) {
+                    return;
+                } else {
+                    String resultLanguage = ChooseLanguageActivity.getLanguageFromResultIntent(data);
+                    Log.i(TAG, "Result = " + resultLanguage);
+                }
                 break;
         }
     }

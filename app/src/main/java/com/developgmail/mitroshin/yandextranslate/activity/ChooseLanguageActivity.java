@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ChooseLanguageActivity extends SingleFragmentActivity implements ChooseLanguageFragment.Callbacks {
     private static final String EXTRA_ARRAY_OF_LANGUAGES = "com.developgmail.mitroshin.yandextranslate.activity.languages";
-    public static final String EXTRA_RESULT_LANGUAGE = "com.developgmail.mitroshin.yandextranslate.activity.result_language";
+    private static final String EXTRA_RESULT_LANGUAGE = "com.developgmail.mitroshin.yandextranslate.activity.result_language";
 
     public static Intent newIntent(Context packageContext, List<String> listOfLanguages) {
         Intent intent = new Intent(packageContext, ChooseLanguageActivity.class);
@@ -33,5 +33,9 @@ public class ChooseLanguageActivity extends SingleFragmentActivity implements Ch
         intent.putExtra(EXTRA_RESULT_LANGUAGE, resultLanguage);
         this.setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    public static String getLanguageFromResultIntent(Intent intent) {
+        return intent.getStringExtra(EXTRA_RESULT_LANGUAGE);
     }
 }

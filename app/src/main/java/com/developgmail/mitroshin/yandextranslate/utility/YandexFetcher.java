@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.developgmail.mitroshin.yandextranslate.gson.GsonDetermineLanguage;
+import com.developgmail.mitroshin.yandextranslate.gson.GsonTranslate;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -124,5 +125,27 @@ public class YandexFetcher {
             outputStream.write(buffer, 0, bytesRead);
         }
         return outputStream.toByteArray();
+    }
+
+    public String translateText(String text, String lang) {
+        try {
+            String queryToTranslateText = getQueryToTranslateText(text, lang);
+            String jsonTranslate = getUrlString(queryToTranslateText);
+            Gson gson = new Gson();
+            GsonTranslate gsonTranslate = gson.fromJson(jsonTranslate, GsonTranslate.class);
+            return gsonTranslate.getText().get(0);
+        } catch (IOException ioe) {
+            Log.e(TAG, "Error when request text translation: ", ioe);
+        }
+        return null;
+    }
+
+    private String getQueryToTranslateText(String text, String lang) {
+        return Uri.parse("https://translate.yandex.net/api/v1.5/tr.json/translate? ")
+                .buildUpon()
+                .appendQueryParameter("key", API_KEY)
+                .appendQueryParameter("text", text)
+                .appendQueryParameter("lang", lang)
+                .build().toString();
     }
 }

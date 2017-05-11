@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.developgmail.mitroshin.yandextranslate.R;
 import com.developgmail.mitroshin.yandextranslate.activity.ChooseLanguageActivity;
@@ -36,6 +37,7 @@ public class TranslateFragment extends Fragment {
     private View mViewLayout;
     private TextView mTextViewSourceLanguage;
     private TextView mTextViewResultLanguage;
+    private TextView mTextViewResultText;
     private EditText mEditTextSourceText;
     private Button mButtonChooseResultLanguage;
     private Button mButtonYandexTranslator;
@@ -62,6 +64,7 @@ public class TranslateFragment extends Fragment {
     private void initializeLayout() {
         initializeTextViewSourceLanguage();
         initializeTextViewResultLanguage();
+        initializeTextViewResultText();
         initializeEditTextSourceText();
         initializeButtonChooseResultLanguage();
         initializeButtonYandexTranslator();
@@ -75,6 +78,10 @@ public class TranslateFragment extends Fragment {
         mTextViewResultLanguage = (TextView) mViewLayout.findViewById(R.id.fragment_translate_text_view_result_language);
     }
 
+    private void initializeTextViewResultText() {
+        mTextViewResultText = (TextView) mViewLayout.findViewById(R.id.fragment_translate_text_view_result_text);
+    }
+
     private void initializeEditTextSourceText() {
         mEditTextSourceText = (EditText) mViewLayout.findViewById(R.id.fragment_translate_edit_text_source_text);
         mEditTextSourceText.addTextChangedListener(new TextWatcher() {
@@ -84,6 +91,7 @@ public class TranslateFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 new DetermineLanguageOfText().execute(s.toString());
+                translateCurrentText(s.toString());
             }
 
             @Override
@@ -166,7 +174,18 @@ public class TranslateFragment extends Fragment {
         switch (requestCode) {
             case REQUEST_RESULT_LANGUAGE:
                 setCurrentLanguageFromResultIntent(data);
+                if (mEditTextSourceText.getText() != null) {
+                    translateCurrentText(mEditTextSourceText.getText().toString());
+                }
                 break;
+        }
+    }
+
+    private void translateCurrentText(String text) {
+        if (currentResultLanguageCode == null) {
+            Toast.makeText(getActivity(), "You should choose result language", Toast.LENGTH_SHORT).show();
+        } else {
+            new TranslateText().execute(text.toString(), currentResultLanguageCode);
         }
     }
 
@@ -187,5 +206,20 @@ public class TranslateFragment extends Fragment {
             }
         }
         return null;
+    }
+
+    private class TranslateText extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            if (!params[0].equals("")) {
+                return new YandexFetcher().translateText(params[0], params[1]);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            mTextViewResultText.setText(s);
+        }
     }
 }
